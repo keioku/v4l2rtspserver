@@ -12,6 +12,10 @@ WORKDIR /usr/local/share/v4l2rtspserver
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 COPY --from=builder /usr/local/share/v4l2rtspserver/ /usr/local/share/v4l2rtspserver/
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends liblog4cpp5v5 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/
+
 EXPOSE 8554
 ENTRYPOINT [ "/usr/local/bin/v4l2rtspserver" ]
 CMD [ "-S" ]
